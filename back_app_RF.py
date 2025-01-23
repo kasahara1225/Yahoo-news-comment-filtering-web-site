@@ -24,18 +24,10 @@ from Attri_Cos_Senti_Stance import (
     strength_article
 )
 
-#行の表示数の上限を撤廃
+#行列の表示数の上限をなくしている
 pd.set_option('display.max_rows', None)
-
-#列の表示数の上限を撤廃
 pd.set_option('display.max_columns', None)
 
-
-# print(sklearn.__version__)
-
-# COMMENT_TAG = "sc-169yn8p-11 jeeyHa" 
-# ANCHOR_PROPS_KEY = "data-cl-params"
-# ANCHOR_PROPS_VALUE = "_cl_vmodule:page;_cl_link:next;"
 
 #モデル
 model = joblib.load("classifier_regression/comment_classifier.pkl")
@@ -130,24 +122,6 @@ st.markdown(
             color: #645b7f;
             border: 2px solid #645b7f;
         }
-        # /* スライダーの色 */
-        # .stSlider > div > div > div > div[role="slider"]{
-        #    background: linear-gradient(to right, #645b7f, #afb7c2);
-        # }
-        # /* スライダーのつまみ */
-        # .stSlider > div > div > div > div > div[role="slider"]{
-        #     background-color: #645b7f;
-        #     box-shadow: 0px 0px 0px 0.2rem #afb7c2;
-        #     color: #645b7f;
-        # }
-        /* コメント表示させるときフェードインとかしたい */
-        .fade-in {
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
         /* テキスト入力欄*/
         input::placeholder {
             color: #4a4a4a;
@@ -177,16 +151,6 @@ url = st.text_input(
 threshold = st.slider("建設的度合いの閾値を設定してください", 0, 3, 1)
 
 
-# ↓いったんおいておく．後で属性選べるようにする．
-# col1, col2,col3,col4 = st.columns(4)
-# with col1:
-#     show_opinion = st.checkbox("意見", value=True)
-# with col2:
-#     show_evidence = st.checkbox("根拠", value=True)
-# with col3:
-#     show_solution = st.checkbox("解決策", value=True)
-# with col4:
-#     show_experience = st.checkbox("経験談", value=True)
 
 if "show_comments" not in st.session_state:
     st.session_state["show_comments"] = False
@@ -230,23 +194,7 @@ if st.button("💬 コメントを見る"):
 
         filtered_df = filtered_df.sort_index().dropna()
 
-        # 閾値以下のもの（ボタン押したら見えるようにする）ーーーーーーーーーーーーーーーーーーー
-        under_comments_list = [
-            (comment, degree)
-            for comment, degree in zip(comments, predictions)
-            if threshold > degree # 閾値以下
-        ]
-        under_comments = pd.DataFrame(under_comments_list, columns=["comment","degree"])
-        under_df_1 = classifications[threshold > classifications["prediction"]]
-        under_df = pd.concat([under_df_1,under_comments], axis=1)
-        # st.dataframe(classifications)
-        # print("filtered_df　columns↓↓")
-        # print(filtered_df.columns)
-        print("under_df↓↓")
-        print(under_df)
-        under_df = under_df.sort_index().dropna()
-
-         ## 閾値以上の結果表示　その３
+         ## 閾値以上の結果表示
         if st.session_state["show_comments"]:
             if not filtered_df.empty:
                 st.write(f"🔍 **閾値以上のコメント ({len(filtered_df)} 件)：**")
@@ -287,60 +235,7 @@ if st.button("💬 コメントを見る"):
             else:
                 st.warning("🔎 閾値以上のコメントは見つかりませんでした")
             
-        #     # 結果 under閾値ボタン押したら非表示のやつ見えるようにするーーーーーーーーーーーーーーーーーーーーーー
-            if st.button("🔽 閾値以下のコメントを見る...　🫣"):
-                st.session_state["show_under_comments"] = True
-                print("押下された")
-            
-        if st.session_state["show_under_comments"]:
-            if not under_df.empty:
-                st.write(f"🔍 **閾値以下のコメント ({len(under_df)} 件)：**")
-                for i, row in enumerate(under_df.itertuples(), 1):
-                    comment_under = row.comment
-                    degree_under = row.prediction
-                    strength_under = row.strength
-                    cos_under = row.cos
-                    print("cos_under")
-                    print(cos_under)
         
-                    # 属性をone-hotから抽出
-                    attributes_under = [col for col in ["意見", "根拠", "解決策", "経験談", "非建設"] if getattr(row, col) == 1]
-                    attributes_text_under = ", ".join(attributes_under)
-        
-                    # スタンスをone-hotから抽出
-                    stance_under = [col for col in ["FAVOR", "AGAINST"] if getattr(row, col) == 1]
-                    stance_text_under = ", ".join(stance_under)
-        
-                    st.write(f"""
-                    **{i}. {comment_under}**
-                    - 建設的度合い: {degree_under}
-                    - 感情強度: {strength_under}
-                    - 記事との関連度合い: {cos_under:.2f}
-                    - コメントの属性: {attributes_text_under}
-                    - スタンス: {stance_text_under}
-                    """)
-            else:
-                st.warning("🔎 閾値以下のコメントはありません！ 😁")
-
-
-
-    #     # 結果
-    #     if filtered_comments:
-    #         st.write(f"🔍 **閾値以上のコメント ({len(filtered_comments)} 件)：**")
-    #         for i, (comment, degree) in enumerate(filtered_comments, 1):
-    #             st.write(f"{i}. {comment} (建設的度合い: {degree})")
-    #     else:
-    #         st.write("閾値以上のコメントは見つかりませんでした。")
-    # else:
-    #     st.write("コメントが見つかりませんでした。")
-
-           #     # 結果その２
-        # # 表形式で結果表示する
-        # if not filtered_df.empty:
-        #     st.write(f"🔍 **閾値以上のコメント ({len(filtered_comments)} 件)：**")
-        #     st.dataframe(filtered_df[["strength", "cos", "prediction"]])
-        # else:
-        #     st.warning("🔎 閾値以上の建設的なコメントは見つかりませんでした。")
 
 
 # ↓↓↓↓テスト↓↓↓↓
