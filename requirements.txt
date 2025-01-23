@@ -1,5 +1,4 @@
 beautifulsoup4==4.12.3
-mkl_random==1.2.8
 openai==0.28.0
 pandas==2.2.3
 python-dotenv==1.0.1
