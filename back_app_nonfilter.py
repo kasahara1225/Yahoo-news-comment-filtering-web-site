@@ -8,12 +8,6 @@ import requests
 from bs4 import BeautifulSoup
 import joblib
 import pandas as pd
-import sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.utils import resample
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder
-from xfeat import SelectCategorical, LabelEncoder, Pipeline, SelectNumerical, ArithmeticCombinations
 from website import ArticleParser
 from dotenv import load_dotenv
 from Attri_Cos_Senti_Stance import (
@@ -98,17 +92,6 @@ url = st.text_input(
 )
 # threshold = st.slider("建設的度合いの閾値を設定してください", 0, 3, 1)
 
-
-# ↓いったんおいておく．後で属性選べるようにする．
-# col1, col2,col3,col4 = st.columns(4)
-# with col1:
-#     show_opinion = st.checkbox("意見", value=True)
-# with col2:
-#     show_evidence = st.checkbox("根拠", value=True)
-# with col3:
-#     show_solution = st.checkbox("解決策", value=True)
-# with col4:
-#     show_experience = st.checkbox("経験談", value=True)
 
 
 if st.button("💬 コメントを見る"):
