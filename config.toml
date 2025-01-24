@@ -1,0 +1,18 @@
+
+[server]
+port = 8501
+enableCORS = false
+enableWebsocketCompression = true
+runOnSave = true
+
+[theme]
+# base="light"
+# backgroundColor = "#e7eaf2"
+# secondaryBackgroundColor = "#afb7c2"
+# textColor = "#645b7f"
+primaryColor = "#645b7f"
+backgroundColor = "#e7eaf2"
+secondaryBackgroundColor = "#E0E0E0"
+textColor = "#000000"
+font = "monospace"
+
