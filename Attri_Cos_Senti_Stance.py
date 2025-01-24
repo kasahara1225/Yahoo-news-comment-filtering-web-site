@@ -7,6 +7,7 @@ import re
 import openai
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
+from streamlit import secrets
 
 # load_dotenv()
 # api_key = os.getenv("OPENAI_API_KEY")
