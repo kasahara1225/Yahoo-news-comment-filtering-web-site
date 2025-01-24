@@ -1,4 +1,7 @@
 pip>=24.3.1
+streamlit==1.39.0
+toml==0.10.2
+setuptools==45.2.0
 beautifulsoup4==4.12.3
 fugashi==1.4.0
 ginza==5.2.0
@@ -26,7 +29,4 @@ spacy-alignments==0.9.1
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 spacy-transformers==1.1.9
-streamlit==1.39.0
-toml==0.10.2
-setuptools==45.2.0
 xfeat @ git+https://github.com/pfnet-research/xfeat.git@b199c3cdacef408b3d2b1d920b22c243cfe0667c
