@@ -8,12 +8,15 @@ import openai
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 
-load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
-FT_model = os.getenv("FT_model")
+# load_dotenv()
+# api_key = os.getenv("OPENAI_API_KEY")
+# FT_model = os.getenv("FT_model")
+
+api_key = secrets["openai"]["api_key"]
+FT_model = secrets["model"]["FT_model"]
 openai.api_key = api_key
 
-# print(spacy.__version__)
+
 def strength_with_gpt(text):
     #コメントの感情強度
     prompt = f"""
