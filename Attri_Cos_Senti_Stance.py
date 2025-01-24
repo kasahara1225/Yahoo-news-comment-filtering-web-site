@@ -13,8 +13,8 @@ from streamlit import secrets
 # api_key = os.getenv("OPENAI_API_KEY")
 # FT_model = os.getenv("FT_model")
 
-api_key = secrets["openai"]["api_key"]
-FT_model = secrets["model"]["FT_model"]
+api_key = secrets["api_key"]
+FT_model = secrets["FT_model"]
 openai.api_key = api_key
 
 
