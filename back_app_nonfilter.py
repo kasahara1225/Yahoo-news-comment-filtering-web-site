@@ -10,13 +10,7 @@ import joblib
 import pandas as pd
 from website import ArticleParser
 from dotenv import load_dotenv
-from Attri_Cos_Senti_Stance import (
-    attribute_with_gpt,
-    strength_with_gpt,
-    calculate_cosine_similarity,
-    stance_with_gpt,
-    strength_article
-)
+
 
 #行の表示数の上限を撤廃
 pd.set_option('display.max_rows', None)
