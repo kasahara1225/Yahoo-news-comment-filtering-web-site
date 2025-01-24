@@ -171,5 +171,4 @@ xfeat @ git+https://github.com/pfnet-research/xfeat.git@b199c3cdacef408b3d2b1d92
 yarg==0.1.9
 yarl==1.15.2
 zipp==3.20.2
---prefer-binary
 
