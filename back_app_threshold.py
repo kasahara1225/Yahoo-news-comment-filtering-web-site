@@ -34,7 +34,7 @@ pd.set_option('display.max_columns', None)
 # print(sklearn.__version__)
 
 #モデル
-model = joblib.load("classifier_regression/comment_classifier.pkl")
+model = joblib.load("comment_classifier.pkl")
 
 # ↓↓↓↓テスト↓↓↓↓
 # comments = ["やはり来月で3年目に差し掛かるこの侵攻を僅か24時間で終わらす事は不可能でしょうね。それは仕方が無いとしてこの次期大統 領が出来れば今年中にウクライナが一方的に不利な条件に立たされる中途半端な停戦ではなく、ロシアと言う侵略国家が2度とウクラ イナのみならず世界に牙を剥く事がない状態に立たされるような完全な終戦を期待しております"," アメリカがウクライナ戦争を停戦させるのは理論上は難しくない。"," 西側諸国は負けを認められないので時間がかかりそうです。"]
