@@ -10,7 +10,6 @@ ja-ginza==5.2.0
 ja-ginza-electra==5.2.0
 joblib==1.4.2
 lightgbm==4.5.0
-ml-metrics==0.1.4
 openai==0.28.0
 optuna==4.1.0
 numpy==1.23.5
