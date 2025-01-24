@@ -28,6 +28,7 @@ spacy-loggers==1.0.5
 spacy-transformers==1.1.9
 streamlit==1.39.0
 toml==0.10.2
+setuptools==57.4.0
 xfeat @ git+https://github.com/pfnet-research/xfeat.git@b199c3cdacef408b3d2b1d920b22c243cfe0667c
 
 
