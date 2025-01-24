@@ -29,4 +29,4 @@ spacy-alignments==0.9.1
 spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 spacy-transformers==1.1.9
-xfeat @ git+https://github.com/pfnet-research/xfeat.git@b199c3cdacef408b3d2b1d920b22c243cfe0667c
+xfeat @ git+https://github.com/karunru/xfeat.git@b199c3cdacef408b3d2b1d920b22c243cfe0667c
