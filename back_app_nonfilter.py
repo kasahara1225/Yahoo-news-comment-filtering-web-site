@@ -28,7 +28,7 @@ pd.set_option('display.max_columns', None)
 
 
 st.set_page_config(
-    page_title="ヤフコメサイト",
+    page_title="ヤフコメ表示サイト",
     page_icon="🍎",
     layout="wide",
 )
@@ -77,8 +77,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.title("🍎 ヤフコメサイト")
-st.write("Yahoo!ニュースのコメントをランダムで15件表示します．（back_app_NF）")
+st.title("🍎 ヤフコメ表示サイト")
+st.write("Yahoo!ニュースのコメントをランダムで15件表示します．")
 
 url = st.text_input(
     "🔗 URLを入力してください", 
