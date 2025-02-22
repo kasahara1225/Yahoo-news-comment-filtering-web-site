@@ -7,7 +7,7 @@ import re
 import openai
 import spacy
 from sklearn.metrics.pairwise import cosine_similarity
-from streamlit import secrets
+
 
 # load_dotenv()
 # api_key = os.getenv("OPENAI_API_KEY")
@@ -18,51 +18,48 @@ FT_model = secrets["FT_model"]
 openai.api_key = api_key
 
 
-def strength_with_gpt(text):
-    #コメントの感情強度
+def comment_strength(text):
     prompt = f"""
     この文章:「 {text}」について，感情極性の強度をそれぞれ-3～3で出力してください．
-    強度の種類は「-3:強いネガティブ、-2:ネガティブ、-1:ややネガティブ、0:ニュートラル、1:ややポジティブ、2:ポジティブ、3:強いポジティブ」です．
+    強度の種類は「-3:強いネガティブ，-2:ネガティブ，-1:ややネガティブ，0:ニュートラル，1:ややポジティブ，2:ポジティブ，3:強いポジティブ」です．
     出力は「-3,-2, -1, 0, 1, 2,3」の数値のうちいずれか一つを出力してください．
     """
     response = openai.ChatCompletion.create(
         model=FT_model,
         messages=[
-            {"role": "system", "content": "あなたは日本語学者です。"},
+            {"role": "system", "content": "あなたは日本語学者です．"},
             {"role": "user", "content": prompt}
         ]
     )
-    # result = response.choices[0].message
     result_strength = response.choices[0].message.content.strip()
-    # print(f"強度: {result_strength}") 
-    # return response.choices[0].message
     return int(result_strength)
+
 
 
 # 
 # 
 
 def strength_article(text):
-    # 記事の感情強度
     prompt = f"""
     この文章:「 {text}」について，感情極性の強度をそれぞれ-3～3で出力してください．
-    強度の種類は「-3:強いネガティブ、-2:ネガティブ、-1:ややネガティブ、0:ニュートラル、1:ややポジティブ、2:ポジティブ、3:強いポジティブ」です．
+    強度の種類は「-3:強いネガティブ，-2:ネガティブ，-1:ややネガティブ，0:ニュートラル，1:ややポジティブ，2:ポジティブ，3:強いポジティブ」です．
     出力は「-3,-2, -1, 0, 1, 2,3」の数値のうちいずれか一つを出力してください．
     """
     response = openai.ChatCompletion.create(
         model=FT_model,
         messages=[
-            {"role": "system", "content": "あなたは日本語学者です。"},
+            {"role": "system", "content": "あなたは日本語学者です．"},
             {"role": "user", "content": prompt}
         ]
     )
     result_artstrength = response.choices[0].message.content.strip()
     return int(result_artstrength)
 
+
 # 
 # 
 
-def attribute_with_gpt(comment,article):
+def attribute(comment,article):
     prompt = f"""
     以下の文章を次のカテゴリの1つまたは複数に分類してください．出力するのは「意見・根拠・解決策・経験談・非建設」のカテゴリのみです：
     1.意見：自分の意見をもとに議論を起こそうとしている
@@ -79,20 +76,20 @@ def attribute_with_gpt(comment,article):
     
     ##例文
     1. 自分の意見をもとに議論を起こそうとしている  
-       - 「私は、リモートワークが普及しても対面でのコミュニケーションの重要性は変わらないと考えています。」  
-       → この部分で、筆者は自分の意見を述べています。「皆さんはどう思いますか？」と問いかけていることで、他の読者や聞き手に対して議論を喚起し、反応を促そうとしている。個人の考えに基づく意見の表明が議論の起点となっている。
+       - 「私は，リモートワークが普及しても対面でのコミュニケーションの重要性は変わらないと考えています．」  
+       → この部分で，筆者は自分の意見を述べています．「皆さんはどう思いますか？」と問いかけていることで，他の読者や聞き手に対して議論を喚起し，反応を促そうとしている．個人の考えに基づく意見の表明が議論の起点となっている．
     
     2. 客観的で根拠が提示されている  
-       - 「最新の調査によれば、ハイブリッドワークを導入している企業の生産性は平均で15％向上していることが分かっています。」  
-       → ここでは、具体的な調査結果という客観的なデータを提示している。数値として生産性の向上や従業員満足度の上昇といった明確な根拠を示しており、その結果をもとにリモートワークとオフィスワークの利点が論じられている。このように、事実やデータに基づいた主張が「客観的で根拠が提示されている」状態に該当する。
+       - 「最新の調査によれば，ハイブリッドワークを導入している企業の生産性は平均で15％向上していることが分かっています．」  
+       → ここでは，具体的な調査結果という客観的なデータを提示している．数値として生産性の向上や従業員満足度の上昇といった明確な根拠を示しており，その結果をもとにリモートワークとオフィスワークの利点が論じられている．このように，事実やデータに基づいた主張が「客観的で根拠が提示されている」状態に該当する．
     
     3. 新たな考え方や解決策を提供している  
        - 「月に一度の『オフィスデー』を設定してみてはどうでしょうか？」  
-       → この文では、リモートワークと対面コミュニケーションの融合という問題に対して、新しい提案である「オフィスデー」の導入を提案している。これは、現状に対する具体的な解決策を提示しているため、「新たな考え方や解決策を提供している」文章となる。
+       → この文では，リモートワークと対面コミュニケーションの融合という問題に対して，新しい提案である「オフィスデー」の導入を提案している．これは，現状に対する具体的な解決策を提示しているため，「新たな考え方や解決策を提供している」文章となる．
     
     4. 記事に関する珍しい経験談である  
-       - 「リモートワーク初期の頃、オフィスに行く必要がある日に、つい自宅からズボンを履かずにビデオ会議に出席してしまったことがありました。」  
-       → ここでは、筆者がリモートワークに関連した個人的な体験談を述べている。この経験は特に珍しいものであり、他の人があまり語らないユニークなエピソードである。そのため、このエピソードは「珍しい経験談」に該当する。
+       - 「リモートワーク初期の頃，オフィスに行く必要がある日に，つい自宅からズボンを履かずにビデオ会議に出席してしまったことがありました．」  
+       → ここでは，筆者がリモートワークに関連した個人的な体験談を述べている．この経験は特に珍しいものであり，他の人があまり語らないユニークなエピソードである．そのため，このエピソードは「珍しい経験談」に該当する．
 
     5. 当てはまらない
        -  記事本文の内容{article}と関連しておらず，誰かを誹謗中傷する内容，性的表現や差別的な表現がされていたらこの項目に該当する．
@@ -101,18 +98,18 @@ def attribute_with_gpt(comment,article):
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[
-            {"role": "system", "content": "あなたは日本語学者です。"},
+            {"role": "system", "content": "あなたは日本語学者です．"},
             {"role": "user", "content": prompt}
         ]
     )
     result = response.choices[0].message.content.strip()
-    # numbers = list(map(int, re.findall(r'1|2|3|4|5', result)))
     return result
 
+
 # 
 # 
 
-def stance_with_gpt(article, comment):
+def stance(article, comment):
     prompt = f"""
     この記事：「{article}」に寄せられたコメント:「 {comment}」のFAVOR・AGAINSTを判定してください．
     判定の種類は「FAVOR，AGAINST」です．
@@ -121,20 +118,22 @@ def stance_with_gpt(article, comment):
     response = openai.ChatCompletion.create(
         model=FT_model,
         messages=[
-            {"role": "system", "content": "あなたは日本語学者です。"},
+            {"role": "system", "content": "あなたは日本語学者です．"},
             {"role": "user", "content": prompt}
         ]
     )
     result = response.choices[0].message.content.strip()
     return result
+
 # 
 # 
 
 
 nlp = spacy.load("ja_ginza")
-def calculate_cosine_similarity(comment, article):
+def cosine_similarity(comment, article):
     doc1, doc2 = nlp(comment), nlp(article)
     return doc1.similarity(doc2)
+
 
 
 # ↓↓↓↓テスト↓↓↓↓
