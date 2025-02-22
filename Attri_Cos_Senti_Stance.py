@@ -19,7 +19,7 @@ FT_model = secrets["FT_model"]
 openai.api_key = api_key
 
 
-def comment_strength(text):
+def strength_with_gpt(text):
     prompt = f"""
     この文章:「 {text}」について，感情極性の強度をそれぞれ-3～3で出力してください．
     強度の種類は「-3:強いネガティブ，-2:ネガティブ，-1:ややネガティブ，0:ニュートラル，1:ややポジティブ，2:ポジティブ，3:強いポジティブ」です．
@@ -60,7 +60,7 @@ def strength_article(text):
 # 
 # 
 
-def attribute(comment,article):
+def attribute_with_gpt(comment,article):
     prompt = f"""
     以下の文章を次のカテゴリの1つまたは複数に分類してください．出力するのは「意見・根拠・解決策・経験談・非建設」のカテゴリのみです：
     1.意見：自分の意見をもとに議論を起こそうとしている
@@ -110,7 +110,7 @@ def attribute(comment,article):
 # 
 # 
 
-def stance(article, comment):
+def stance_with_gpt(article, comment):
     prompt = f"""
     この記事：「{article}」に寄せられたコメント:「 {comment}」のFAVOR・AGAINSTを判定してください．
     判定の種類は「FAVOR，AGAINST」です．
@@ -131,7 +131,7 @@ def stance(article, comment):
 
 
 nlp = spacy.load("ja_ginza")
-def cosine_similarity(comment, article):
+def calculate_cosine_similarity(comment, article):
     doc1, doc2 = nlp(comment), nlp(article)
     return doc1.similarity(doc2)
 
