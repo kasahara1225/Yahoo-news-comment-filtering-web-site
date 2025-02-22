@@ -1,28 +1,22 @@
 #!/usr/bin/env python
 # coding: utf-8
+
 import re
 import time
 import streamlit as st
-from urllib.parse import urlparse
-import requests
-from bs4 import BeautifulSoup
 import joblib
 import pandas as pd
-import sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.utils import resample
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder
-from xfeat import SelectCategorical, LabelEncoder, Pipeline, SelectNumerical, ArithmeticCombinations
+from xfeat import  Pipeline, SelectNumerical, ArithmeticCombinations
 from website import ArticleParser
-from dotenv import load_dotenv
-from Attri_Cos_Senti_Stance import (
-    attribute_with_gpt,
-    strength_with_gpt,
-    calculate_cosine_similarity,
-    stance_with_gpt,
+from comment_features import (
+    attribute,
+    comment_strength,
+    cosine_similarity,
+    stance,
     strength_article
 )
+
 
 #行の表示数の上限を撤廃
 pd.set_option('display.max_rows', None)
@@ -31,7 +25,6 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 
 
-# print(sklearn.__version__)
 
 #モデル
 model = joblib.load("comment_classifier.pkl")
@@ -47,10 +40,10 @@ def classify_comments(comments: list, article: str) -> pd.DataFrame:
     df = pd.DataFrame({'comment': comments})
     results = []
     for comment in comments:
-        attribute = attribute_with_gpt(comment, article).replace(" ", "")
-        strength = strength_with_gpt(comment)
-        cosine_sim = calculate_cosine_similarity(comment, article)
-        stance = stance_with_gpt(article, comment)
+        attribute = attribute(comment, article).replace(" ", "")
+        strength = comment_strength(comment)
+        cosine_sim = cosine_similarity(comment, article)
+        stance = stance(article, comment)
         article_strength = strength_article(article)
 
 
