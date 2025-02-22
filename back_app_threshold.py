@@ -9,11 +9,11 @@ import pandas as pd
 from sklearn.pipeline import Pipeline
 from xfeat import  Pipeline, SelectNumerical, ArithmeticCombinations
 from website import ArticleParser
-from comment_features import (
-    attribute,
-    comment_strength,
-    cosine_similarity,
-    stance,
+from Attri_Cos_Senti_Stance import (
+    attribute_with_gpt,
+    strength_with_gpt,
+    calculate_cosine_similarity,
+    stance_with_gpt,
     strength_article
 )
 
@@ -40,11 +40,12 @@ def classify_comments(comments: list, article: str) -> pd.DataFrame:
     df = pd.DataFrame({'comment': comments})
     results = []
     for comment in comments:
-        attribute = attribute(comment, article).replace(" ", "")
-        strength = comment_strength(comment)
-        cosine_sim = cosine_similarity(comment, article)
-        stance = stance(article, comment)
+        attribute = attribute_with_gpt(comment, article).replace(" ", "")
+        strength = strength_with_gpt(comment)
+        cosine_sim = calculate_cosine_similarity(comment, article)
+        stance = stance_with_gpt(article, comment)
         article_strength = strength_article(article)
+
 
 
         new_row = {
