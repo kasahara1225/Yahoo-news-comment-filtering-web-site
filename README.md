@@ -39,7 +39,8 @@ Yahoo!ニュースのコメントをスクレイピングするスクリプト�
 
 ### 5. `comment_classifier.pkl`
 コメントの建設的度合いを推定するモデル．
-ランダムフォレスト分類モデルにコメントセット（https://github.com/kasahara1225/Yahoo-news-constructive-comment.git）を学習させたもの．
+ランダムフォレスト分類モデルにコメントセットを学習させたもの．
+  - https://github.com/kasahara1225/Yahoo-news-constructive-comment.git
 モデルのハイパーパラメータはn_estimators: 100，max_depth: 3，min_samples_split: 10
 
 ### 6. `back_app_threshold.py`
