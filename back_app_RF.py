@@ -148,11 +148,11 @@ st.write("オプション")
 st.write("閲覧したいコメントの属性を選択できます．チェックを入れた属性に該当するコメントが表示されます")
 col1,col2,col3,col4 = st.columns(4)
 with col1:
-    show_evidence = st.checkbox("根拠", value=True)
+    show_evidence = st.checkbox("根拠", value=False)
 with col2:
-    show_solution = st.checkbox("解決策", value=True)
+    show_solution = st.checkbox("解決策", value=False)
 with col3:
-    show_experience = st.checkbox("経験談", value=True)
+    show_experience = st.checkbox("経験談", value=False)
 with col4:
     show_nonconstructive = st.checkbox("非建設的なコメントを心して見る...👀（閾値が1以上の時のみ選択できます）", value=False)
 
