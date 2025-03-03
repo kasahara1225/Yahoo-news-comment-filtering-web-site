@@ -144,6 +144,15 @@ url = st.text_input(
 )
 threshold = st.slider("建設的度合いの閾値を設定してください", 0, 3, 1)
 
+col1,col2,col3,col4 = st.columns(4)
+with col2:
+    show_evidence = st.checkbox("根拠", value=True)
+with col3:
+    show_solution = st.checkbox("解決策", value=True)
+with col4:
+    show_experience = st.checkbox("経験談", value=True)
+with col1:
+    show_nonconstructive = st.checkbox("非建設的なコメントを心して見る...👀（閾値が1以上の時のみ選択できます）", value=False)
 
 
 if "show_comments" not in st.session_state:
@@ -186,6 +195,15 @@ if st.button("💬 コメントを見る"):
         print("filtered_df↓↓")
         print(filtered_df)
 
+        if show_nonconstructive:
+            filtered_df = filtered_df[filtered_df["prediction"] == 0]
+        if show_evidence:
+            filtered_df = filtered_df[filtered_df["根拠"] == 1]
+        if show_solution:
+            filtered_df = filtered_df[filtered_df["解決策"] == 1]
+        if show_experience:
+            filtered_df = filtered_df[filtered_df["経験談"] == 1]
+            
         filtered_df = filtered_df.sort_index().dropna()
 
          ## 閾値以上の結果表示
@@ -218,14 +236,19 @@ if st.button("💬 コメントを見る"):
                     print("stance_text")
                     print(stance_text)
             
-                    st.write(f"""
-                    **{i}. {comment}**
-                    - 建設的度合い: {degree}
-                    - 感情強度: {strength}
-                    - 記事との関連度合い: {cos:.2f}
-                    - コメントの属性: {attributes_text}
-                    - スタンス: {stance_text}
-                    """)
+                    st.markdown(
+                        f"""
+                        <div style="background-color: #F6F7F8; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                            <b>{i + 1}. {comment}</b><br>
+                            - 建設的度合い: {degree}<br>
+                            - 感情強度: {strength}<br>
+                            - 記事との関連度合い: {cos:.2f}<br>
+                            - コメントの属性: {attributes_text}<br>
+                            - スタンス: {stance_text}
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
             else:
                 st.warning("🔎 閾値以上のコメントは見つかりませんでした")
             
