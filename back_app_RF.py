@@ -138,6 +138,17 @@ st.write(f"""
                 - ◆珍しい体験談を提示している
                 """)
 
+st.write("🌟このシステムの使い方")
+st.write(f"""              
+                - Yahoo!ニュースから好きな記事を選択する📰
+                  - https://news.yahoo.co.jp/
+                - 記事のコメント欄にアクセスする
+                - コメント欄のURLをコピーする🔗（URLの末尾が”/comments”もしくは”/comments?order=newer”になっていることを確認してください．）
+                - 以下のURL入力ボックスにURLを貼り付ける
+                - 閲覧したい建設的度合いの閾値を設定する🎚
+                - 💬 コメントを見るボタンを押す👉
+                """)
+
 url = st.text_input(
     "🔗 URLを入力してください", 
     placeholder="例: https://example~~~/comments"
